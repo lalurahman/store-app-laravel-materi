@@ -23,71 +23,48 @@
         <div class="container text-center">
             <h2 class="fw-bold text-danger">Our Best Sellers</h2>
             <div class="row mt-4 justify-content-center">
-                <div class="col-md-3">
-                    <div
-                        class="card"
-                        style="width: 18rem;"
-                    >
-                        <img
-                            src="{{ asset('image/baju.jpg') }}"
-                            class="card-img-top"
-                            alt="Baju Kaos Hitam Polos"
+                @forelse ($products as $item)
+                    <div class="col-md-3">
+                        <div
+                            class="card"
+                            style="width: 18rem;"
                         >
-                        <div class="card-body">
-                            <h5 class="card-title">Baju Kaos Hitam Polos</h5>
-                            <p class="text-muted mb-1">Baju</p>
-                            <p class="fw-bold text-success">Rp 100.000</p>
-                            <a
-                                href="#"
-                                class="btn btn-outline-danger"
-                            >Buy Now</a>
+                            @if (!$item->image)
+                                <img
+                                    src="{{ asset('image/no-image.png') }}"
+                                    class="card-img-top"
+                                    alt="{{ $item->name }}"
+                                >
+                            @else
+                                <img
+                                    src="{{ Storage::url('products/' . $item->image) }}"
+                                    class="card-img-top"
+                                    alt="{{ $item->name }}"
+                                >
+                            @endif
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $item->name }}</h5>
+                                <p class="text-muted mb-1">{{ $item->category->name }}</p>
+                                <p class="fw-bold text-success">Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                                <a
+                                    href="https://api.whatsapp.com/send?phone=6285256999428&text=Halo%20Admin%20Saya%20ingin%20membeli%20produk%20{{ urlencode($item->name) }}"
+                                    class="btn btn-outline-danger"
+                                    target="_blank"
+                                >Buy Now</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div
-                        class="card"
-                        style="width: 18rem;"
-                    >
-                        <img
-                            src="{{ asset('image/celana.jpg') }}"
-                            class="card-img-top"
-                            alt="Celana Jeans Biru"
-                        >
-                        <div class="card-body">
-                            <h5 class="card-title">Celana Jeans Biru</h5>
-                            <p class="text-muted mb-1">Celana</p>
-                            <p class="fw-bold text-success">Rp 150.000</p>
-                            <a
-                                href="#"
-                                class="btn btn-outline-danger"
-                            >Buy Now</a>
-                        </div>
+                @empty
+                    <div class="col-12">
+                        <p class="text-center">Tidak ada produk tersedia</p>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div
-                        class="card"
-                        style="width: 18rem;"
-                    >
-                        <img
-                            src="{{ asset('image/sepatu.jpg') }}"
-                            class="card-img-top"
-                            alt="Sepatu Sneakers Putih"
-                        >
-                        <div class="card-body">
-                            <h5 class="card-title">Sepatu Sneakers Putih</h5>
-                            <p class="text-muted mb-1">Sepatu</p>
-                            <p class="fw-bold text-success">Rp 200.000</p>
-                            <a
-                                href="#"
-                                class="btn btn-outline-danger"
-                            >Buy Now</a>
-                        </div>
-                    </div>
-                </div>
+                @endforelse
             </div>
         </div>
     </section>
     <!-- end section products -->
 @endsection
+
+@push('scripts')
+    {{-- script tambahan jika diperlukan --}}
+@endpush
