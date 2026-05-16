@@ -43,7 +43,7 @@ class ProductController extends Controller
             ]);
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
-                $imageName = time() . '_' . $file->getClientOriginalName();
+                $imageName = time() . '_' . str_replace(' ', '_', $file->getClientOriginalName());
                 $file->storeAs('products', $imageName, 'public');
                 $data['image'] = $imageName;
             }
@@ -104,7 +104,7 @@ class ProductController extends Controller
             ]);
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
-                $imageName = time() . '_' . $file->getClientOriginalName();
+                $imageName = time() . '_' . str_replace(' ', '_', $file->getClientOriginalName());
                 $file->storeAs('products', $imageName, 'public');
                 $data['image'] = $imageName;
             }
